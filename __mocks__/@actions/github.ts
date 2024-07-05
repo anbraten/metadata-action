@@ -1,4 +1,4 @@
-import {jest} from '@jest/globals';
+import {vi} from 'vitest';
 
 export const context = {
   repo: {
@@ -204,4 +204,4 @@ export const context = {
   }
 };
 
-export const getOctokit = jest.fn();
+export const getOctokit = vi.fn();

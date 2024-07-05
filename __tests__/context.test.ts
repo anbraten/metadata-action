@@ -1,4 +1,4 @@
-import {afterEach, beforeEach, describe, expect, test, it, jest} from '@jest/globals';
+import {afterEach, beforeEach, describe, expect, test, it, vi} from 'vitest';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -9,8 +9,8 @@ import {GitHub} from '@docker/actions-toolkit/lib/github';
 import {ContextSource, getContext, getInputs, Inputs} from '../src/context';
 
 beforeEach(() => {
-  jest.clearAllMocks();
-  jest.spyOn(GitHub, 'context', 'get').mockImplementation((): Context => {
+  vi.clearAllMocks();
+  vi.spyOn(GitHub, 'context', 'get').mockImplementation((): Context => {
     return new Context();
   });
 });
@@ -102,7 +102,7 @@ describe('getInputs', () => {
 describe('getContext', () => {
   const originalEnv = process.env;
   beforeEach(() => {
-    jest.resetModules();
+    vi.resetModules();
     process.env = {
       ...originalEnv,
       ...dotenv.parse(fs.readFileSync(path.join(__dirname, 'fixtures/event_create_branch.env')))
@@ -119,7 +119,7 @@ describe('getContext', () => {
   });
 
   it('git', async () => {
-    jest.spyOn(Git, 'context').mockImplementation((): Promise<Context> => {
+    vi.spyOn(Git, 'context').mockImplementation((): Promise<Context> => {
       return Promise.resolve({
         ref: 'refs/heads/git-test',
         sha: 'git-test-sha'
